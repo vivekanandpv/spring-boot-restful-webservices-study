@@ -1,6 +1,7 @@
 package com.vivekanandpv.springbootrestfulwebservicesstudy.apis;
 
 import com.vivekanandpv.springbootrestfulwebservicesstudy.models.Book;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,31 +11,23 @@ import java.util.List;
 @RequestMapping("api/v1/books")
 public class BooksApi {
 
-    //  GET and DELETE methods do not typically process body of the incoming request
-    //  Though not recommended, however, you can still consider a GET or DELETE with a body
-    //  https://stackoverflow.com/a/983458/3969961
+    //  For XML support
+    //  https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
     @GetMapping
     public ResponseEntity<?> getSingle() {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping
+    //  Content-Type in the request must now be explicit
+    //  Either application/json or application/xml
+    //  406 if neither
+    @PostMapping(
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE
+            }
+    )
     public ResponseEntity<?> create(@RequestBody Book book) {
-        return ResponseEntity.ok().build();
-    }
-
-    @PutMapping("{id}")
-    public ResponseEntity<?> updateWithPut(@PathVariable int id, @RequestBody Book book) {
-        return ResponseEntity.ok().build();
-    }
-
-    @PatchMapping("{id}")
-    public ResponseEntity<?> updateWithPatch(@PathVariable int id, @RequestBody Book book) {
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(@PathVariable int id) {
         return ResponseEntity.ok().build();
     }
 }
