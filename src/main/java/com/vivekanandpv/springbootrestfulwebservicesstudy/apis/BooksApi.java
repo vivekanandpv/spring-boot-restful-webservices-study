@@ -20,7 +20,7 @@ public class BooksApi {
 
     //  Content-Type in the request must now be explicit
     //  Either application/json or application/xml
-    //  406 if neither
+    //  415 Unsupported media-type if neither
     @PostMapping(
             consumes = {
                     MediaType.APPLICATION_JSON_VALUE,
@@ -30,4 +30,17 @@ public class BooksApi {
     public ResponseEntity<?> create(@RequestBody Book book) {
         return ResponseEntity.ok().build();
     }
+
+    //  XML body for testing
+    //  <Book>
+    //      <id>125</id>
+    //      <title>Learning Spring Boot</title>
+    //      <description>Spring Boot for beginners</description>
+    //      <authors>
+    //          <authors>John Doe</authors>
+    //          <authors>Mark David</authors>
+    //      </authors>
+    //      <pages>826</pages>
+    //      <price>1250.0</price>
+    //  </Book>
 }
