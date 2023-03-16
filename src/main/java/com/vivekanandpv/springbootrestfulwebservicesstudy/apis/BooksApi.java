@@ -3,6 +3,7 @@ package com.vivekanandpv.springbootrestfulwebservicesstudy.apis;
 import com.vivekanandpv.springbootrestfulwebservicesstudy.models.Book;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class BooksApi {
     //  http://localhost:8080/api/v1/books
     @GetMapping
-    public ResponseEntity<Book> getSingleV1() {
+    public ResponseEntity<Book> get() {
         Book book = new Book();
         book.setId(125);
         book.setTitle("Learning Spring Boot");
@@ -25,11 +26,11 @@ public class BooksApi {
         return ResponseEntity.ok(book);
     }
 
-    //  http://localhost:8080/api/v1/books/single
-    @GetMapping("single")
-    public ResponseEntity<Book> getSingleV2() {
+    //  http://localhost:8080/api/v1/books/<id>
+    @GetMapping("{id}")
+    public ResponseEntity<Book> getByIdV1(@PathVariable int id) {
         Book book = new Book();
-        book.setId(125);
+        book.setId(id);
         book.setTitle("Learning Spring Boot");
         book.setAuthors(List.of("John Doe", "Mark David"));
         book.setDescription("Spring Boot for beginners");
@@ -39,12 +40,11 @@ public class BooksApi {
         return ResponseEntity.ok(book);
     }
 
-    //  http://localhost:8080/api/v1/books/foo
-    //  http://localhost:8080/api/v1/books/bar
-    @GetMapping({"foo", "bar"})
-    public ResponseEntity<Book> getSingleV3() {
+    //  http://localhost:8080/api/v1/books/var/<id>
+    @GetMapping("var/{id}")
+    public ResponseEntity<Book> getByIdV2(@PathVariable("id") int varId) {
         Book book = new Book();
-        book.setId(125);
+        book.setId(varId);
         book.setTitle("Learning Spring Boot");
         book.setAuthors(List.of("John Doe", "Mark David"));
         book.setDescription("Spring Boot for beginners");
