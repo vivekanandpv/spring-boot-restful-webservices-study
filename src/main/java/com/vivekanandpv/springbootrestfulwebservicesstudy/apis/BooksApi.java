@@ -35,21 +35,14 @@ public class BooksApi {
         throw new IOException("DELETE throws IOException");
     }
 
-    //  Declaration order is not important
-    //  Proximal handlers override distal handlers
-    //  If the exception is not handled within, it will permeate to JVM
     @ExceptionHandler
     public ResponseEntity<?> handleRuntimeException(RuntimeException e) {
         return ResponseEntity.status(400).body(String.format("handleRuntimeException: %s", e.getMessage()));
     }
 
+    //  This handler trumps the ControllerAdvice
     @ExceptionHandler
     public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException e) {
         return ResponseEntity.status(400).body(String.format("handleIllegalArgumentException: %s", e.getMessage()));
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<?> handleThrowable(Throwable e) {
-        return ResponseEntity.status(400).body(String.format("handleThrowable: %s", e.getMessage()));
     }
 }
