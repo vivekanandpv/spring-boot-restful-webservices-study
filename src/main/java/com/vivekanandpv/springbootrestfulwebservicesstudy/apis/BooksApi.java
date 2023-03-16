@@ -4,6 +4,7 @@ import com.vivekanandpv.springbootrestfulwebservicesstudy.models.Book;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -11,33 +12,44 @@ import java.util.List;
 public class BooksApi {
     @GetMapping
     public ResponseEntity<?> getSingle() {
-        return ResponseEntity.ok().build();
+        throw new RuntimeException("GET throws RuntimeException");
     }
 
     @PostMapping
     public ResponseEntity<?> create() {
-        return ResponseEntity.ok().build();
+        throw new RuntimeException("POST throws RuntimeException");
     }
 
     @PutMapping("{id}")
     public ResponseEntity<?> updateWithPut(@PathVariable int id) {
-        return ResponseEntity.ok().build();
+        throw new IllegalArgumentException("PUT throws IllegalArgumentException");
     }
 
-    //  The main difference between the PUT and PATCH method is that
-    //  the PUT method uses the request URI to supply a modified version
-    //  of the requested resource which replaces the original version of
-    //  the resource, whereas the PATCH method supplies a set of instructions
-    //  to modify the resource. If the PATCH document is larger than
-    //  the size of the new version of the resource sent by the PUT method
-    //  then the PUT method is preferred.
     @PatchMapping("{id}")
     public ResponseEntity<?> updateWithPatch(@PathVariable int id) {
-        return ResponseEntity.ok().build();
+        throw new RuntimeException("PATCH throws RuntimeException");
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<?> delete(@PathVariable int id) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> delete(@PathVariable int id) throws IOException {
+        throw new IOException("DELETE throws IOException");
+    }
+
+    //  Declaration order is not important
+    //  Proximal handlers override distal handlers
+    //  If the exception is not handled within, it will permeate to JVM
+    @ExceptionHandler
+    public ResponseEntity<?> handleRuntimeException(RuntimeException e) {
+        return ResponseEntity.status(400).body(String.format("handleRuntimeException: %s", e.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.status(400).body(String.format("handleIllegalArgumentException: %s", e.getMessage()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleThrowable(Throwable e) {
+        return ResponseEntity.status(400).body(String.format("handleThrowable: %s", e.getMessage()));
     }
 }
