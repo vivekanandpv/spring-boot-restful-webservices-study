@@ -9,30 +9,27 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/books")
 public class BooksApi {
+
+    //  GET and DELETE methods do not typically process body of the incoming request
+    //  Though not recommended, however, you can still consider a GET or DELETE with a body
+    //  https://stackoverflow.com/a/983458/3969961
     @GetMapping
     public ResponseEntity<?> getSingle() {
         return ResponseEntity.ok().build();
     }
 
     @PostMapping
-    public ResponseEntity<?> create() {
+    public ResponseEntity<?> create(@RequestBody Book book) {
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateWithPut(@PathVariable int id) {
+    public ResponseEntity<?> updateWithPut(@PathVariable int id, @RequestBody Book book) {
         return ResponseEntity.ok().build();
     }
 
-    //  The main difference between the PUT and PATCH method is that
-    //  the PUT method uses the request URI to supply a modified version
-    //  of the requested resource which replaces the original version of
-    //  the resource, whereas the PATCH method supplies a set of instructions
-    //  to modify the resource. If the PATCH document is larger than
-    //  the size of the new version of the resource sent by the PUT method
-    //  then the PUT method is preferred.
     @PatchMapping("{id}")
-    public ResponseEntity<?> updateWithPatch(@PathVariable int id) {
+    public ResponseEntity<?> updateWithPatch(@PathVariable int id, @RequestBody Book book) {
         return ResponseEntity.ok().build();
     }
 
