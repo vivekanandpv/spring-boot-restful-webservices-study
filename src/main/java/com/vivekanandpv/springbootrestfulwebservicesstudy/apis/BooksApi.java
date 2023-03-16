@@ -53,4 +53,18 @@ public class BooksApi {
 
         return ResponseEntity.ok(book);
     }
+
+    //  http://localhost:8080/api/v1/books/<id>/<price>
+    @GetMapping("{id}/{price}")
+    public ResponseEntity<Book> getByIdV3(@PathVariable int id, @PathVariable double price) {
+        Book book = new Book();
+        book.setId(id);
+        book.setTitle("Learning Spring Boot");
+        book.setAuthors(List.of("John Doe", "Mark David"));
+        book.setDescription("Spring Boot for beginners");
+        book.setPages(826);
+        book.setPrice(price);
+
+        return ResponseEntity.ok(book);
+    }
 }
