@@ -13,6 +13,9 @@ public class BooksApi {
 
     //  For XML support
     //  https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
+
+    //  For XML deserialization we need:
+    //  https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core/2.15.0
     @GetMapping
     public ResponseEntity<?> getSingle() {
         return ResponseEntity.ok().build();
